@@ -3,7 +3,6 @@ import { Lightbulb, FileText, TrendingUp, Menu, X, Sparkles, CheckCircle, AlertC
 
 const GROQ_API_KEY = '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';
 
-
 const MentorIA = () => {
   const [activeTab, setActiveTab] = useState('home');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -46,47 +45,57 @@ const MentorIA = () => {
         body: JSON.stringify({
           model: 'llama-3.3-70b-versatile',
           messages: [{
+            role: 'system',
+            content: 'Você é um mentor de negócios de elite. Sempre retorne apenas JSON válido, sem texto adicional, sem markdown.'
+          }, {
             role: 'user',
-            content: `Você é um mentor de negócios de elite que cobra R$ 50 mil por hora. Sua missão é analisar ideias de negócio com profundidade absurda, mas explicar tudo de forma tão simples que até uma avó de 70 anos entenderia perfeitamente.
-
-Use linguagem direta, exemplos práticos do dia a dia, e seja brutalmente honesto. Não enrole, não use jargões complicados.
+            content: `Analise esta ideia como um mentor que cobra R$ 50 mil por hora. Seja honesto e use linguagem simples.
 
 IDEIA: ${ideaForm.idea}
-PÚBLICO-ALVO: ${ideaForm.target}
-PROBLEMA QUE RESOLVE: ${ideaForm.problem}
+PÚBLICO: ${ideaForm.target}
+PROBLEMA: ${ideaForm.problem}
 
-Analise como um mentor milionário analisaria, mas explique como se estivesse conversando com alguém que nunca teve negócio.
-
-Forneça sua resposta em JSON:
+Retorne APENAS este JSON:
 {
-  "score": número de 0-100 (seja honesto, não infle),
-  "viabilidade": "alta" ou "média" ou "baixa",
-  "pontos_fortes": [
-    "3 pontos fortes REAIS, explicados de forma simples com exemplos práticos"
-  ],
-  "pontos_atencao": [
-    "2 problemas sérios que podem dar errado, sem enrolação"
-  ],
-  "proximos_passos": [
-    "3 ações específicas e práticas para começar HOJE, com passo a passo claro"
-  ]
-}
-
-Seja direto, prático e honesto. Nada de papo genérico.`
+  "score": 85,
+  "viabilidade": "alta",
+  "pontos_fortes": ["Ponto 1 explicado de forma simples", "Ponto 2", "Ponto 3"],
+  "pontos_atencao": ["Problema 1 real", "Problema 2"],
+  "proximos_passos": ["Ação 1 específica", "Ação 2", "Ação 3"]
+}`
           }],
-          temperature: 0.8
+          temperature: 0.7,
+          max_tokens: 1200
         })
       });
 
       const data = await response.json();
+      
+      if (!data.choices || !data.choices[0]) {
+        throw new Error('Resposta inválida da API');
+      }
+      
       const text = data.choices[0].message.content;
       const cleanText = text.replace(/```json|```/g, '').trim();
-      const parsed = JSON.parse(cleanText);
+      
+      let parsed;
+      try {
+        parsed = JSON.parse(cleanText);
+      } catch (parseError) {
+        console.error('Erro ao parsear JSON:', cleanText);
+        throw new Error('Formato de resposta inválido');
+      }
+      
+      if (!parsed.score || !parsed.pontos_fortes || !parsed.pontos_atencao || !parsed.proximos_passos) {
+        throw new Error('Dados incompletos na resposta');
+      }
+      
       setResult(parsed);
     } catch (error) {
+      console.error('Erro completo:', error);
       setResult({
         error: true,
-        message: 'Erro ao processar. Tente novamente.'
+        message: 'Erro ao processar. Tente novamente em alguns segundos.'
       });
     }
     
@@ -107,101 +116,84 @@ Seja direto, prático e honesto. Nada de papo genérico.`
         body: JSON.stringify({
           model: 'llama-3.3-70b-versatile',
           messages: [{
+            role: 'system',
+            content: 'Você é um consultor de negócios de elite. Sempre retorne apenas JSON válido, sem texto adicional, sem markdown.'
+          }, {
             role: 'user',
-            content: `Você é um consultor de negócios de elite que cobra R$ 50 mil por hora de consultoria. Construiu mais de 200 empresas milionárias. Sua especialidade é pegar ideias e transformar em planos de ação claros e lucrativos.
+            content: `Crie um plano de negócios profissional mas com linguagem ultra simples.
 
-Explique tudo de forma tão simples que qualquer pessoa, mesmo sem experiência em negócios, entenda perfeitamente. Use exemplos práticos, números reais, e seja direto ao ponto. Sem enrolação, sem jargão técnico.
+NEGÓCIO: ${businessForm.business}
+MERCADO: ${businessForm.market}
+INVESTIMENTO: ${businessForm.investment}
+PRAZO: ${businessForm.timeline}
+EXPERIÊNCIA: ${businessForm.experience}
+CONCORRENTES: ${businessForm.competitors}
+DIFERENCIAIS: ${businessForm.differentials}
 
-INFORMAÇÕES:
-Negócio: ${businessForm.business}
-Mercado: ${businessForm.market}
-Investimento: ${businessForm.investment}
-Prazo: ${businessForm.timeline}
-Experiência: ${businessForm.experience}
-Concorrentes: ${businessForm.competitors}
-Diferenciais: ${businessForm.differentials}
-
-Crie um plano de negócios profissional mas com linguagem simples. Seja específico com números, valores, prazos.
-
-JSON:
+Retorne APENAS este JSON (seja específico com números e valores):
 {
-  "resumo_executivo": "Resumo poderoso em 2-3 frases que vende a ideia. Foco no resultado financeiro e impacto.",
+  "resumo_executivo": "Resumo em 2-3 frases",
   "analise_mercado": {
-    "tamanho_mercado": "Explique o tamanho do mercado com números reais. Quanto dinheiro circula? Quantos clientes existem? Use comparações simples.",
-    "publico_alvo": "Descreva quem vai comprar como se estivesse apontando a pessoa na rua. Idade, onde mora, quanto ganha, o que faz no fim de semana.",
-    "tendencias": "O que está acontecendo agora que favorece esse negócio? Use exemplos que qualquer um vê no dia a dia."
+    "tamanho_mercado": "Explicação com números",
+    "publico_alvo": "Descrição clara do público",
+    "tendencias": "Tendências atuais"
   },
   "estrutura_custos": {
-    "investimento_inicial": [
-      "Item específico: R$ valor aproximado - explique para que serve em linguagem simples",
-      "Mais 2 itens com valores e explicação clara"
-    ],
-    "custos_fixos_mensais": [
-      "Custo mensal: R$ valor - o que é isso de forma simples",
-      "Mais 2 custos fixos"
-    ],
-    "custos_variaveis": [
-      "Custo que muda conforme vende: explique como funciona",
-      "Mais 1 custo variável"
-    ]
+    "investimento_inicial": ["Item 1: R$ valor", "Item 2: R$ valor", "Item 3: R$ valor"],
+    "custos_fixos_mensais": ["Custo 1: R$ valor/mês", "Custo 2", "Custo 3"],
+    "custos_variaveis": ["Custo variável 1", "Custo variável 2"]
   },
   "estrategia_receita": {
-    "fontes_receita": [
-      "Como entra dinheiro 1: explique o modelo de cobrança de forma clara, com exemplo de valor",
-      "Como entra dinheiro 2: se tiver"
-    ],
-    "precificacao": "Quanto cobrar e por quê. Compare com concorrentes. Explique a matemática simples do lucro.",
-    "projecao_mensal": "Mês 1: R$ X porque... Mês 3: R$ Y porque... Mês 6: R$ Z porque... Seja realista, não otimista."
+    "fontes_receita": ["Fonte 1 com modelo de cobrança", "Fonte 2"],
+    "precificacao": "Estratégia de preço clara",
+    "projecao_mensal": "Projeção realista mês a mês"
   },
-  "vantagens_competitivas": [
-    "Vantagem real 1: Por que isso importa pro cliente? Como isso te faz ganhar mais?",
-    "Vantagem 2 e 3 com explicação prática"
-  ],
+  "vantagens_competitivas": ["Vantagem 1", "Vantagem 2", "Vantagem 3"],
   "analise_riscos": [
-    {
-      "risco": "Risco real e honesto que pode quebrar o negócio",
-      "mitigacao": "O que fazer EXATAMENTE para evitar. Passo a passo prático."
-    },
-    {
-      "risco": "Segundo risco maior",
-      "mitigacao": "Solução específica e acionável"
-    }
+    {"risco": "Risco principal", "mitigacao": "Como resolver"},
+    {"risco": "Segundo risco", "mitigacao": "Solução"}
   ],
   "roadmap_90dias": {
-    "mes1": [
-      "Semana 1-4: Ação específica com resultado esperado. Ex: Criar Instagram e postar 3x por semana até ter 200 seguidores",
-      "Mais 2 ações do mês 1 super específicas"
-    ],
-    "mes2": [
-      "Ações do mês 2 focadas em conseguir primeiros clientes pagantes",
-      "Mais 2 ações"
-    ],
-    "mes3": [
-      "Ações do mês 3 focadas em crescer e ganhar mais",
-      "Mais 2 ações"
-    ]
+    "mes1": ["Ação 1 do mês 1", "Ação 2", "Ação 3"],
+    "mes2": ["Ação 1 do mês 2", "Ação 2", "Ação 3"],
+    "mes3": ["Ação 1 do mês 3", "Ação 2", "Ação 3"]
   },
-  "kpis": [
-    "Métrica 1 com meta clara: Ex: Conseguir 10 clientes pagando R$ 500/mês cada = R$ 5mil/mês até dia X",
-    "Métrica 2 e 3 com números específicos e prazo"
-  ]
-}
-
-Seja honesto, direto e prático. Use números reais, não genéricos.`
+  "kpis": ["KPI 1 com meta numérica", "KPI 2", "KPI 3"]
+}`
           }],
-          temperature: 0.8
+          temperature: 0.7,
+          max_tokens: 2500
         })
       });
 
       const data = await response.json();
+      
+      if (!data.choices || !data.choices[0]) {
+        throw new Error('Resposta inválida da API');
+      }
+      
       const text = data.choices[0].message.content;
       const cleanText = text.replace(/```json|```/g, '').trim();
-      const parsed = JSON.parse(cleanText);
+      
+      let parsed;
+      try {
+        parsed = JSON.parse(cleanText);
+      } catch (parseError) {
+        console.error('Erro ao parsear JSON:', cleanText);
+        throw new Error('Formato de resposta inválido');
+      }
+      
+      if (!parsed.resumo_executivo || !parsed.analise_mercado || !parsed.estrutura_custos || 
+          !parsed.estrategia_receita || !parsed.roadmap_90dias || !parsed.kpis) {
+        throw new Error('Dados incompletos na resposta');
+      }
+      
       setResult(parsed);
     } catch (error) {
+      console.error('Erro completo:', error);
       setResult({
         error: true,
-        message: 'Erro ao processar. Tente novamente.'
+        message: 'Erro ao processar. Tente novamente em alguns segundos.'
       });
     }
     
@@ -222,52 +214,57 @@ Seja honesto, direto e prático. Use números reais, não genéricos.`
         body: JSON.stringify({
           model: 'llama-3.3-70b-versatile',
           messages: [{
+            role: 'system',
+            content: 'Você é um estrategista de marketing de elite. Sempre retorne apenas JSON válido, sem texto adicional, sem markdown, sem explicações.'
+          }, {
             role: 'user',
-            content: `Você é um estrategista de marketing que cobra R$ 50 mil por hora. Já fez mais de 100 empresas saírem do zero para 7 dígitos. Sua especialidade é criar estratégias simples mas brutalmente eficazes.
-
-Explique tudo como se estivesse ensinando alguém que nunca fez marketing. Use exemplos práticos do dia a dia. Seja específico: não diga "poste nas redes sociais", diga "poste 3 vezes por semana no Instagram, terças às 19h, quintas às 12h, sábados às 10h".
+            content: `Crie uma estratégia de marketing profissional mas com linguagem simples.
 
 PRODUTO: ${marketingForm.product}
 PÚBLICO: ${marketingForm.audience}
 ORÇAMENTO: ${marketingForm.budget}
 
-Crie uma estratégia matadora mas com linguagem ultra simples.
-
-JSON:
+Retorne APENAS este JSON (sem markdown, sem texto adicional):
 {
-  "canais_prioritarios": [
-    "Canal 1: Por que esse canal funciona para esse público + como usar de forma prática (frequência, horário, tipo de conteúdo)",
-    "Canal 2 e 3 com mesma lógica"
-  ],
-  "primeiras_acoes": [
-    "Ação 1: O que fazer HOJE, passo a passo, quanto tempo vai levar, que resultado esperar. Seja super específico.",
-    "Ação 2 e 3 com detalhes práticos"
-  ],
-  "calendario_30dias": [
-    "Semana 1 (dias 1-7): Liste exatamente o que fazer cada dia. Ex: Dia 1: criar perfil, Dia 2: fazer 5 posts...",
-    "Semana 2, 3 e 4 com ações diárias específicas"
-  ],
-  "metricas_acompanhar": [
-    "Métrica 1 com número alvo: Ex: Conseguir 500 seguidores até dia 30. Como medir: abrir Instagram > ver número de seguidores",
-    "Métrica 2 e 3 com alvo e como medir de forma simples"
-  ]
-}
-
-Seja direto, prático e honesto. Foque no que traz resultado real, não no que é bonito.`
+  "canais_prioritarios": ["Canal 1 com explicação prática", "Canal 2", "Canal 3"],
+  "primeiras_acoes": ["Ação 1 específica", "Ação 2", "Ação 3"],
+  "calendario_30dias": ["Semana 1: ações específicas", "Semana 2: ações", "Semana 3: ações", "Semana 4: ações"],
+  "metricas_acompanhar": ["Métrica 1 com meta", "Métrica 2", "Métrica 3"]
+}`
           }],
-          temperature: 0.8
+          temperature: 0.7,
+          max_tokens: 1500
         })
       });
 
       const data = await response.json();
+      
+      if (!data.choices || !data.choices[0]) {
+        throw new Error('Resposta inválida da API');
+      }
+      
       const text = data.choices[0].message.content;
       const cleanText = text.replace(/```json|```/g, '').trim();
-      const parsed = JSON.parse(cleanText);
+      
+      let parsed;
+      try {
+        parsed = JSON.parse(cleanText);
+      } catch (parseError) {
+        console.error('Erro ao parsear JSON:', cleanText);
+        throw new Error('Formato de resposta inválido');
+      }
+      
+      // Validar estrutura
+      if (!parsed.canais_prioritarios || !parsed.primeiras_acoes || !parsed.calendario_30dias || !parsed.metricas_acompanhar) {
+        throw new Error('Dados incompletos na resposta');
+      }
+      
       setResult(parsed);
     } catch (error) {
+      console.error('Erro completo:', error);
       setResult({
         error: true,
-        message: 'Erro ao processar. Tente novamente.'
+        message: 'Erro ao processar. Tente novamente em alguns segundos.'
       });
     }
     
