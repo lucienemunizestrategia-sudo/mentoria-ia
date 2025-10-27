@@ -3,6 +3,7 @@ import { Lightbulb, FileText, TrendingUp, Menu, X, Sparkles, CheckCircle, AlertC
 
 const GROQ_API_KEY = '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';
 
+
 const MentorIA = () => {
   const [activeTab, setActiveTab] = useState('home');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
