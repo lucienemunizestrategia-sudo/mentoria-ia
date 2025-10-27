@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Lightbulb, FileText, TrendingUp, Menu, X, Sparkles, CheckCircle, AlertCircle, Download } from 'lucide-react';
 
+const GROQ_API_KEY = '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';
+
 const MentorIA = () => {
   const [activeTab, setActiveTab] = useState('home');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -34,14 +36,14 @@ const MentorIA = () => {
     setResult(null);
     
     try {
-      const response = await fetch('https://api.anthropic.com/v1/messages', {
+      const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': `Bearer ${GROQ_API_KEY}`
         },
         body: JSON.stringify({
-          model: 'claude-sonnet-4-20250514',
-          max_tokens: 1000,
+          model: 'llama-3.3-70b-versatile',
           messages: [{
             role: 'user',
             content: `Você é um mentor de negócios especializado. Analise esta ideia de negócio e forneça uma avaliação estruturada.
@@ -60,12 +62,13 @@ Forneça sua resposta em JSON com esta estrutura exata:
 }
 
 Retorne APENAS o JSON, sem explicações adicionais.`
-          }]
+          }],
+          temperature: 0.7
         })
       });
 
       const data = await response.json();
-      const text = data.content.find(item => item.type === 'text')?.text || '';
+      const text = data.choices[0].message.content;
       const cleanText = text.replace(/```json|```/g, '').trim();
       const parsed = JSON.parse(cleanText);
       setResult(parsed);
@@ -84,14 +87,14 @@ Retorne APENAS o JSON, sem explicações adicionais.`
     setResult(null);
     
     try {
-      const response = await fetch('https://api.anthropic.com/v1/messages', {
+      const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': `Bearer ${GROQ_API_KEY}`
         },
         body: JSON.stringify({
-          model: 'claude-sonnet-4-20250514',
-          max_tokens: 2000,
+          model: 'llama-3.3-70b-versatile',
           messages: [{
             role: 'user',
             content: `Você é um consultor de negócios sênior. Crie um plano de negócios profissional e detalhado.
@@ -137,12 +140,13 @@ Forneça sua resposta em JSON com esta estrutura exata (use texto profissional e
 }
 
 Retorne APENAS o JSON, sem explicações adicionais ou markdown.`
-          }]
+          }],
+          temperature: 0.7
         })
       });
 
       const data = await response.json();
-      const text = data.content.find(item => item.type === 'text')?.text || '';
+      const text = data.choices[0].message.content;
       const cleanText = text.replace(/```json|```/g, '').trim();
       const parsed = JSON.parse(cleanText);
       setResult(parsed);
@@ -161,14 +165,14 @@ Retorne APENAS o JSON, sem explicações adicionais ou markdown.`
     setResult(null);
     
     try {
-      const response = await fetch('https://api.anthropic.com/v1/messages', {
+      const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': `Bearer ${GROQ_API_KEY}`
         },
         body: JSON.stringify({
-          model: 'claude-sonnet-4-20250514',
-          max_tokens: 1000,
+          model: 'llama-3.3-70b-versatile',
           messages: [{
             role: 'user',
             content: `Você é um estrategista de marketing digital. Crie uma estratégia de marketing.
@@ -186,12 +190,13 @@ Forneça sua resposta em JSON com esta estrutura exata:
 }
 
 Retorne APENAS o JSON, sem explicações adicionais.`
-          }]
+          }],
+          temperature: 0.7
         })
       });
 
       const data = await response.json();
-      const text = data.content.find(item => item.type === 'text')?.text || '';
+      const text = data.choices[0].message.content;
       const cleanText = text.replace(/```json|```/g, '').trim();
       const parsed = JSON.parse(cleanText);
       setResult(parsed);
