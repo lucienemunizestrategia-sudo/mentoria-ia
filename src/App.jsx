@@ -456,7 +456,18 @@ Seja direto, prático e honesto. Foque no que traz resultado real, não no que �
       </div>
 
       {result && !result.error && (
-        <div className="bg-gray-900 border border-green-400/30 rounded-lg p-6 space-y-4">
+        <div className="space-y-4">
+          <div className="flex justify-end">
+            <button
+              onClick={exportToPDF}
+              className="flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded transition-colors"
+            >
+              <Download className="w-5 h-5" />
+              Exportar PDF
+            </button>
+          </div>
+
+        <div id="idea-validation-content" className="bg-gray-900 border border-green-400/30 rounded-lg p-6 space-y-4">
           <div className="flex items-center justify-between">
             <h3 className="text-2xl font-bold text-white">Análise Completa</h3>
             <div className="text-right">
@@ -508,6 +519,7 @@ Seja direto, prático e honesto. Foque no que traz resultado real, não no que �
               </ol>
             </div>
           </div>
+        </div>
         </div>
       )}
 
@@ -852,7 +864,18 @@ Seja direto, prático e honesto. Foque no que traz resultado real, não no que �
       </div>
 
       {result && !result.error && (
-        <div className="bg-gray-900 border border-purple-500/30 rounded-lg p-6 space-y-6">
+        <div className="space-y-4">
+          <div className="flex justify-end">
+            <button
+              onClick={exportToPDF}
+              className="flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded transition-colors"
+            >
+              <Download className="w-5 h-5" />
+              Exportar PDF
+            </button>
+          </div>
+
+        <div id="marketing-strategy-content" className="bg-gray-900 border border-purple-500/30 rounded-lg p-6 space-y-6">
           <h3 className="text-2xl font-bold text-white">Sua Estratégia de Marketing</h3>
 
           <div className="space-y-4">
@@ -903,6 +926,7 @@ Seja direto, prático e honesto. Foque no que traz resultado real, não no que �
               </ul>
             </div>
           </div>
+        </div>
         </div>
       )}
 
