@@ -46,24 +46,34 @@ const MentorIA = () => {
           model: 'llama-3.3-70b-versatile',
           messages: [{
             role: 'user',
-            content: `Você é um mentor de negócios especializado. Analise esta ideia de negócio e forneça uma avaliação estruturada.
+            content: `Você é um mentor de negócios de elite que cobra R$ 50 mil por hora. Sua missão é analisar ideias de negócio com profundidade absurda, mas explicar tudo de forma tão simples que até uma avó de 70 anos entenderia perfeitamente.
+
+Use linguagem direta, exemplos práticos do dia a dia, e seja brutalmente honesto. Não enrole, não use jargões complicados.
 
 IDEIA: ${ideaForm.idea}
 PÚBLICO-ALVO: ${ideaForm.target}
 PROBLEMA QUE RESOLVE: ${ideaForm.problem}
 
-Forneça sua resposta em JSON com esta estrutura exata:
+Analise como um mentor milionário analisaria, mas explique como se estivesse conversando com alguém que nunca teve negócio.
+
+Forneça sua resposta em JSON:
 {
-  "score": 85,
-  "viabilidade": "alta",
-  "pontos_fortes": ["ponto 1", "ponto 2", "ponto 3"],
-  "pontos_atencao": ["ponto 1", "ponto 2"],
-  "proximos_passos": ["passo 1", "passo 2", "passo 3"]
+  "score": número de 0-100 (seja honesto, não infle),
+  "viabilidade": "alta" ou "média" ou "baixa",
+  "pontos_fortes": [
+    "3 pontos fortes REAIS, explicados de forma simples com exemplos práticos"
+  ],
+  "pontos_atencao": [
+    "2 problemas sérios que podem dar errado, sem enrolação"
+  ],
+  "proximos_passos": [
+    "3 ações específicas e práticas para começar HOJE, com passo a passo claro"
+  ]
 }
 
-Retorne APENAS o JSON, sem explicações adicionais.`
+Seja direto, prático e honesto. Nada de papo genérico.`
           }],
-          temperature: 0.7
+          temperature: 0.8
         })
       });
 
@@ -97,51 +107,88 @@ Retorne APENAS o JSON, sem explicações adicionais.`
           model: 'llama-3.3-70b-versatile',
           messages: [{
             role: 'user',
-            content: `Você é um consultor de negócios sênior. Crie um plano de negócios profissional e detalhado.
+            content: `Você é um consultor de negócios de elite que cobra R$ 50 mil por hora de consultoria. Construiu mais de 200 empresas milionárias. Sua especialidade é pegar ideias e transformar em planos de ação claros e lucrativos.
 
-INFORMAÇÕES DO NEGÓCIO:
-Descrição: ${businessForm.business}
-Análise de Mercado: ${businessForm.market}
-Investimento Disponível: ${businessForm.investment}
-Prazo para Lançamento: ${businessForm.timeline}
-Experiência do Empreendedor: ${businessForm.experience}
-Principais Concorrentes: ${businessForm.competitors}
-Diferenciais Competitivos: ${businessForm.differentials}
+Explique tudo de forma tão simples que qualquer pessoa, mesmo sem experiência em negócios, entenda perfeitamente. Use exemplos práticos, números reais, e seja direto ao ponto. Sem enrolação, sem jargão técnico.
 
-Forneça sua resposta em JSON com esta estrutura exata (use texto profissional e detalhado):
+INFORMAÇÕES:
+Negócio: ${businessForm.business}
+Mercado: ${businessForm.market}
+Investimento: ${businessForm.investment}
+Prazo: ${businessForm.timeline}
+Experiência: ${businessForm.experience}
+Concorrentes: ${businessForm.competitors}
+Diferenciais: ${businessForm.differentials}
+
+Crie um plano de negócios profissional mas com linguagem simples. Seja específico com números, valores, prazos.
+
+JSON:
 {
-  "resumo_executivo": "resumo conciso e impactante do negócio em 2-3 frases",
+  "resumo_executivo": "Resumo poderoso em 2-3 frases que vende a ideia. Foco no resultado financeiro e impacto.",
   "analise_mercado": {
-    "tamanho_mercado": "análise do tamanho e potencial",
-    "publico_alvo": "descrição detalhada do público",
-    "tendencias": "tendências relevantes do mercado"
+    "tamanho_mercado": "Explique o tamanho do mercado com números reais. Quanto dinheiro circula? Quantos clientes existem? Use comparações simples.",
+    "publico_alvo": "Descreva quem vai comprar como se estivesse apontando a pessoa na rua. Idade, onde mora, quanto ganha, o que faz no fim de semana.",
+    "tendencias": "O que está acontecendo agora que favorece esse negócio? Use exemplos que qualquer um vê no dia a dia."
   },
   "estrutura_custos": {
-    "investimento_inicial": ["item 1 com valor estimado", "item 2", "item 3"],
-    "custos_fixos_mensais": ["custo 1", "custo 2", "custo 3"],
-    "custos_variaveis": ["custo 1", "custo 2"]
+    "investimento_inicial": [
+      "Item específico: R$ valor aproximado - explique para que serve em linguagem simples",
+      "Mais 2 itens com valores e explicação clara"
+    ],
+    "custos_fixos_mensais": [
+      "Custo mensal: R$ valor - o que é isso de forma simples",
+      "Mais 2 custos fixos"
+    ],
+    "custos_variaveis": [
+      "Custo que muda conforme vende: explique como funciona",
+      "Mais 1 custo variável"
+    ]
   },
   "estrategia_receita": {
-    "fontes_receita": ["fonte 1 detalhada", "fonte 2"],
-    "precificacao": "estratégia de precificação recomendada",
-    "projecao_mensal": "projeção realista de faturamento nos primeiros meses"
+    "fontes_receita": [
+      "Como entra dinheiro 1: explique o modelo de cobrança de forma clara, com exemplo de valor",
+      "Como entra dinheiro 2: se tiver"
+    ],
+    "precificacao": "Quanto cobrar e por quê. Compare com concorrentes. Explique a matemática simples do lucro.",
+    "projecao_mensal": "Mês 1: R$ X porque... Mês 3: R$ Y porque... Mês 6: R$ Z porque... Seja realista, não otimista."
   },
-  "vantagens_competitivas": ["vantagem 1", "vantagem 2", "vantagem 3"],
+  "vantagens_competitivas": [
+    "Vantagem real 1: Por que isso importa pro cliente? Como isso te faz ganhar mais?",
+    "Vantagem 2 e 3 com explicação prática"
+  ],
   "analise_riscos": [
-    {"risco": "risco identificado", "mitigacao": "como mitigar"},
-    {"risco": "risco 2", "mitigacao": "mitigação 2"}
+    {
+      "risco": "Risco real e honesto que pode quebrar o negócio",
+      "mitigacao": "O que fazer EXATAMENTE para evitar. Passo a passo prático."
+    },
+    {
+      "risco": "Segundo risco maior",
+      "mitigacao": "Solução específica e acionável"
+    }
   ],
   "roadmap_90dias": {
-    "mes1": ["ação prioritária 1", "ação 2", "ação 3"],
-    "mes2": ["ação 1", "ação 2", "ação 3"],
-    "mes3": ["ação 1", "ação 2", "ação 3"]
+    "mes1": [
+      "Semana 1-4: Ação específica com resultado esperado. Ex: Criar Instagram e postar 3x por semana até ter 200 seguidores",
+      "Mais 2 ações do mês 1 super específicas"
+    ],
+    "mes2": [
+      "Ações do mês 2 focadas em conseguir primeiros clientes pagantes",
+      "Mais 2 ações"
+    ],
+    "mes3": [
+      "Ações do mês 3 focadas em crescer e ganhar mais",
+      "Mais 2 ações"
+    ]
   },
-  "kpis": ["métrica 1 com meta", "métrica 2", "métrica 3"]
+  "kpis": [
+    "Métrica 1 com meta clara: Ex: Conseguir 10 clientes pagando R$ 500/mês cada = R$ 5mil/mês até dia X",
+    "Métrica 2 e 3 com números específicos e prazo"
+  ]
 }
 
-Retorne APENAS o JSON, sem explicações adicionais ou markdown.`
+Seja honesto, direto e prático. Use números reais, não genéricos.`
           }],
-          temperature: 0.7
+          temperature: 0.8
         })
       });
 
@@ -175,23 +222,39 @@ Retorne APENAS o JSON, sem explicações adicionais ou markdown.`
           model: 'llama-3.3-70b-versatile',
           messages: [{
             role: 'user',
-            content: `Você é um estrategista de marketing digital. Crie uma estratégia de marketing.
+            content: `Você é um estrategista de marketing que cobra R$ 50 mil por hora. Já fez mais de 100 empresas saírem do zero para 7 dígitos. Sua especialidade é criar estratégias simples mas brutalmente eficazes.
 
-PRODUTO/SERVIÇO: ${marketingForm.product}
+Explique tudo como se estivesse ensinando alguém que nunca fez marketing. Use exemplos práticos do dia a dia. Seja específico: não diga "poste nas redes sociais", diga "poste 3 vezes por semana no Instagram, terças às 19h, quintas às 12h, sábados às 10h".
+
+PRODUTO: ${marketingForm.product}
 PÚBLICO: ${marketingForm.audience}
 ORÇAMENTO: ${marketingForm.budget}
 
-Forneça sua resposta em JSON com esta estrutura exata:
+Crie uma estratégia matadora mas com linguagem ultra simples.
+
+JSON:
 {
-  "canais_prioritarios": ["canal 1", "canal 2", "canal 3"],
-  "primeiras_acoes": ["ação 1", "ação 2", "ação 3"],
-  "calendario_30dias": ["semana 1: ação", "semana 2: ação", "semana 3: ação", "semana 4: ação"],
-  "metricas_acompanhar": ["métrica 1", "métrica 2", "métrica 3"]
+  "canais_prioritarios": [
+    "Canal 1: Por que esse canal funciona para esse público + como usar de forma prática (frequência, horário, tipo de conteúdo)",
+    "Canal 2 e 3 com mesma lógica"
+  ],
+  "primeiras_acoes": [
+    "Ação 1: O que fazer HOJE, passo a passo, quanto tempo vai levar, que resultado esperar. Seja super específico.",
+    "Ação 2 e 3 com detalhes práticos"
+  ],
+  "calendario_30dias": [
+    "Semana 1 (dias 1-7): Liste exatamente o que fazer cada dia. Ex: Dia 1: criar perfil, Dia 2: fazer 5 posts...",
+    "Semana 2, 3 e 4 com ações diárias específicas"
+  ],
+  "metricas_acompanhar": [
+    "Métrica 1 com número alvo: Ex: Conseguir 500 seguidores até dia 30. Como medir: abrir Instagram > ver número de seguidores",
+    "Métrica 2 e 3 com alvo e como medir de forma simples"
+  ]
 }
 
-Retorne APENAS o JSON, sem explicações adicionais.`
+Seja direto, prático e honesto. Foque no que traz resultado real, não no que é bonito.`
           }],
-          temperature: 0.7
+          temperature: 0.8
         })
       });
 
@@ -211,11 +274,13 @@ Retorne APENAS o JSON, sem explicações adicionais.`
   };
 
   const exportToPDF = () => {
-    const content = document.getElementById('business-plan-content');
+    const content = document.getElementById('business-plan-content') || 
+                    document.getElementById('idea-validation-content') ||
+                    document.getElementById('marketing-strategy-content');
     if (!content) return;
 
     const printWindow = window.open('', '', 'height=800,width=800');
-    printWindow.document.write('<html><head><title>Plano de Negócios - MentorIA</title>');
+    printWindow.document.write('<html><head><title>MentorIA - Análise Profissional</title>');
     printWindow.document.write('<style>');
     printWindow.document.write(`
       body { 
@@ -279,7 +344,7 @@ Retorne APENAS o JSON, sem explicações adicionais.`
       }
     `);
     printWindow.document.write('</style></head><body>');
-    printWindow.document.write('<h1>Plano de Negócios Profissional</h1>');
+    printWindow.document.write('<h1>Análise Profissional - MentorIA</h1>');
     printWindow.document.write(content.innerHTML);
     printWindow.document.write('<div class="footer">Gerado por MentorIA - Seu mentor de negócios com inteligência artificial</div>');
     printWindow.document.write('</body></html>');
