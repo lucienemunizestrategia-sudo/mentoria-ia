@@ -223,57 +223,74 @@ Retorne JSON válido:
         body: JSON.stringify({
           model: 'llama-3.3-70b-versatile',
           messages: [
-            { role: 'system', content: 'Você é um consultor financeiro e especialista em precificação estratégica. Sempre retorne JSON válido com análises profundas e números práticos.' },
-            { role: 'user', content: `Como um consultor de precificação de elite, analise e calcule o preço ideal para este produto ou serviço. Seja direto, pragmático e baseado em dados reais de mercado.
+            { role: 'system', content: 'Você é um consultor financeiro especialista em precificação. SEMPRE retorne APENAS JSON válido, sem texto adicional antes ou depois.' },
+            { role: 'user', content: `Analise e calcule o preço ideal:
 
-PRODUTO OU SERVIÇO: ${pricingForm.produto}
+PRODUTO: ${pricingForm.produto}
 CUSTOS FIXOS MENSAIS: R$ ${pricingForm.custosFixos}
-CUSTOS VARIÁVEIS POR UNIDADE: R$ ${pricingForm.custosVariaveis}
-TEMPO DE PRODUÇÃO OU ENTREGA: ${pricingForm.tempoProducao}
+CUSTOS VARIÁVEIS: R$ ${pricingForm.custosVariaveis}
+TEMPO PRODUÇÃO: ${pricingForm.tempoProducao}
 MARGEM DESEJADA: ${pricingForm.margemDesejada}%
 PREÇO CONCORRENTE: R$ ${pricingForm.concorrentePreco}
 SEGMENTO: ${pricingForm.segmento}
-EXPERIÊNCIA NO MERCADO: ${pricingForm.experiencia}
+EXPERIÊNCIA: ${pricingForm.experiencia}
 
-IMPORTANTE: Faça cálculos reais considerando custos fixos, variáveis e margem. Retorne JSON válido:
+Retorne APENAS este JSON (sem markdown, sem texto extra):
 {
   "preco_minimo": "500.00",
   "preco_ideal": "850.00",
   "preco_premium": "1200.00",
-  "frase_impacto": "Frase curta e direta sobre o preço ideal",
+  "frase_impacto": "Frase sobre precificação",
   "analise_completa": {
     "custo_total_unitario": "280.00",
-    "margem_liquida_ideal": "67.06",
+    "margem_liquida_ideal": "67",
     "ponto_equilibrio_mensal": "15",
-    "posicionamento_mercado": "Intermediário Premium"
+    "posicionamento_mercado": "Premium"
   },
   "estrategia_precificacao": {
-    "recomendacao_principal": "Texto explicando qual preço usar e por quê",
-    "justificativa": "Explicação detalhada da estratégia de precificação",
-    "quando_usar_minimo": "Situação específica para usar preço mínimo",
-    "quando_usar_ideal": "Situação específica para usar preço ideal",
-    "quando_usar_premium": "Situação específica para usar preço premium"
+    "recomendacao_principal": "Recomendação clara",
+    "justificativa": "Justificativa da estratégia",
+    "quando_usar_minimo": "Quando usar mínimo",
+    "quando_usar_ideal": "Quando usar ideal",
+    "quando_usar_premium": "Quando usar premium"
   },
   "comparativo_concorrencia": {
-    "analise": "Comparação detalhada com preço do concorrente",
-    "vantagem_competitiva": "Como se posicionar no mercado"
+    "analise": "Análise vs concorrente",
+    "vantagem_competitiva": "Vantagem competitiva"
   },
-  "alertas_importantes": ["Alerta crítico 1", "Alerta crítico 2"],
-  "proximos_passos": ["Ação prática 1", "Ação prática 2", "Ação prática 3"]
-}
-
-Seja específico nos números e estratégias. Use valores reais baseados nos dados fornecidos.` }
+  "alertas_importantes": ["Alerta 1", "Alerta 2"],
+  "proximos_passos": ["Passo 1", "Passo 2", "Passo 3"]
+}` }
           ],
           temperature: 0.7,
-          max_tokens: 2500
+          max_tokens: 2500,
+          response_format: { type: "json_object" }
         })
       });
+      
       const data = await response.json();
-      if (!data.choices || !data.choices[0]) throw new Error('Resposta inválida');
-      const text = data.choices[0].message.content.replace(/```json|```/g, '').trim();
-      setResult(JSON.parse(text));
+      
+      if (!response.ok) {
+        console.error('Erro API:', data);
+        throw new Error(data.error?.message || 'Erro na API');
+      }
+      
+      if (!data.choices || !data.choices[0] || !data.choices[0].message) {
+        throw new Error('Resposta inválida da API');
+      }
+      
+      const content = data.choices[0].message.content;
+      const cleanContent = content.replace(/```json\n?|\n?```/g, '').trim();
+      
+      const parsed = JSON.parse(cleanContent);
+      setResult(parsed);
+      
     } catch (error) {
-      setResult({ error: true, message: 'Erro ao calcular precificação.' });
+      console.error('Erro completo:', error);
+      setResult({ 
+        error: true, 
+        message: `Erro ao calcular: ${error.message || 'Tente novamente'}` 
+      });
     }
     setLoading(false);
   };
