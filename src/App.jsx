@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Lightbulb, FileText, TrendingUp, Menu, X, Sparkles, CheckCircle, DollarSign } from 'lucide-react';
 
-const GROQ_API_KEY = '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';
+const GROQ_API_KEY = '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';
 
 const MentorIA = () => {
   const [activeTab, setActiveTab] = useState('home');
