@@ -1182,6 +1182,8 @@ Retorne APENAS este JSON: {"pitch30": "Pitch de 30 segundos.", "pitch60": "Pitch
   
   return (
     <div className="min-h-screen bg-black text-white">
+ // ENCONTRE O BLOCO <nav> E SUBSTITUA PELO CÓDIGO ABAIXO
+
       <nav className="bg-gray-900 border-b border-purple-500/30">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
@@ -1190,13 +1192,14 @@ Retorne APENAS este JSON: {"pitch30": "Pitch de 30 segundos.", "pitch60": "Pitch
               <span className="text-xl font-bold">MentorIA</span>
             </div>
 
-            <div className="hidden md:flex space-x-4">
-              <button onClick={() => {setActiveTab('home'); setResult(null);}} className={`px-4 py-2 rounded transition-colors ${activeTab === 'home' ? 'bg-purple-600 text-white' : 'text-gray-300 hover:text-white'}`}>Início</button>
-              {/* NOVO: Botão da Calculadora no menu */}
-              <button onClick={() => {setActiveTab('pricing'); setResult(null);}} className={`px-4 py-2 rounded transition-colors ${activeTab === 'pricing' ? 'bg-purple-600 text-white' : 'text-gray-300 hover:text-white'}`}>Preços</button>
-              <button onClick={() => {setActiveTab('validator'); setResult(null);}} className={`px-4 py-2 rounded transition-colors ${activeTab === 'validator' ? 'bg-purple-600 text-white' : 'text-gray-300 hover:text-white'}`}>Validador</button>
-              <button onClick={() => {setActiveTab('planner'); setResult(null);}} className={`px-4 py-2 rounded transition-colors ${activeTab === 'planner' ? 'bg-purple-600 text-white' : 'text-gray-300 hover:text-white'}`}>Plano de Negócios</button>
-              <button onClick={() => {setActiveTab('marketing'); setResult(null);}} className={`px-4 py-2 rounded transition-colors ${activeTab === 'marketing' ? 'bg-purple-600 text-white' : 'text-gray-300 hover:text-white'}`}>Marketing</button>
+            <div className="hidden md:flex space-x-2">
+              <button onClick={() => {setActiveTab('home'); setResult(null);}} className={`px-3 py-2 rounded ${activeTab === 'home' ? 'bg-purple-600' : 'hover:bg-gray-800'}`}>Início</button>
+              <button onClick={() => {setActiveTab('validator'); setResult(null);}} className={`px-3 py-2 rounded ${activeTab === 'validator' ? 'bg-purple-600' : 'hover:bg-gray-800'}`}>Validador</button>
+              <button onClick={() => {setActiveTab('diagnostic'); setResult(null);}} className={`px-3 py-2 rounded ${activeTab === 'diagnostic' ? 'bg-purple-600' : 'hover:bg-gray-800'}`}>Diagnóstico</button>
+              <button onClick={() => {setActiveTab('planner'); setResult(null);}} className={`px-3 py-2 rounded ${activeTab === 'planner' ? 'bg-purple-600' : 'hover:bg-gray-800'}`}>Plano</button>
+              <button onClick={() => {setActiveTab('marketing'); setResult(null);}} className={`px-3 py-2 rounded ${activeTab === 'marketing' ? 'bg-purple-600' : 'hover:bg-gray-800'}`}>Marketing</button>
+              <button onClick={() => {setActiveTab('pitch'); setResult(null);}} className={`px-3 py-2 rounded ${activeTab === 'pitch' ? 'bg-purple-600' : 'hover:bg-gray-800'}`}>Pitch</button>
+              <button onClick={() => {setActiveTab('pricing'); setResult(null);}} className={`px-3 py-2 rounded ${activeTab === 'pricing' ? 'bg-green-600' : 'hover:bg-gray-800'}`}>Preços</button>
             </div>
 
             <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)} className="md:hidden p-2">
@@ -1204,16 +1207,17 @@ Retorne APENAS este JSON: {"pitch30": "Pitch de 30 segundos.", "pitch60": "Pitch
             </button>
           </div>
 
-                    {mobileMenuOpen && (
-            <div className="md:hidden py-4 space-y-2">
-              <button onClick={() => {setActiveTab('home'); setMobileMenuOpen(false); setResult(null);}} className={`block w-full text-left px-4 py-2 rounded ${activeTab === 'home' ? 'bg-purple-600' : 'hover:bg-gray-800'}`}>Início</button>
-              <button onClick={() => {setActiveTab('pricing'); setMobileMenuOpen(false); setResult(null);}} className={`block w-full text-left px-4 py-2 rounded ${activeTab === 'pricing' ? 'bg-purple-600' : 'hover:bg-gray-800'}`}>Preços</button>
-              <button onClick={() => {setActiveTab('validator'); setMobileMenuOpen(false); setResult(null);}} className={`block w-full text-left px-4 py-2 rounded ${activeTab === 'validator' ? 'bg-purple-600' : 'hover:bg-gray-800'}`}>Validador</button>
-              <button onClick={() => {setActiveTab('planner'); setMobileMenuOpen(false); setResult(null);}} className={`block w-full text-left px-4 py-2 rounded ${activeTab === 'planner' ? 'bg-purple-600' : 'hover:bg-gray-800'}`}>Plano de Negócios</button>
-              <button onClick={() => {setActiveTab('marketing'); setMobileMenuOpen(false); setResult(null);}} className={`block w-full text-left px-4 py-2 rounded ${activeTab === 'marketing' ? 'bg-purple-600' : 'hover:bg-gray-800'}`}>Marketing</button>
+          {mobileMenuOpen && (
+            <div className="md:hidden py-2 space-y-1">
+              <button onClick={() => { setActiveTab('home'); setMobileMenuOpen(false); setResult(null); }} className="block w-full text-left px-3 py-2 rounded hover:bg-gray-800">Início</button>
+              <button onClick={() => { setActiveTab('validator'); setMobileMenuOpen(false); setResult(null); }} className="block w-full text-left px-3 py-2 rounded hover:bg-gray-800">Validador de Ideias</button>
+              <button onClick={() => { setActiveTab('diagnostic'); setMobileMenuOpen(false); setResult(null); }} className="block w-full text-left px-3 py-2 rounded hover:bg-gray-800">Diagnóstico Rápido</button>
+              <button onClick={() => { setActiveTab('planner'); setMobileMenuOpen(false); setResult(null); }} className="block w-full text-left px-3 py-2 rounded hover:bg-gray-800">Plano de Negócios</button>
+              <button onClick={() => { setActiveTab('marketing'); setMobileMenuOpen(false); setResult(null); }} className="block w-full text-left px-3 py-2 rounded hover:bg-gray-800">Estratégia de Marketing</button>
+              <button onClick={() => { setActiveTab('pitch'); setMobileMenuOpen(false); setResult(null); }} className="block w-full text-left px-3 py-2 rounded hover:bg-gray-800">Pitch de Elevador</button>
+              <button onClick={() => { setActiveTab('pricing'); setMobileMenuOpen(false); setResult(null); }} className="block w-full text-left px-3 py-2 rounded hover:bg-gray-800">Calculadora de Preços</button>
             </div>
           )}
-
         </div>
       </nav>
 
