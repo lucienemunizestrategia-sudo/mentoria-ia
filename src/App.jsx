@@ -341,6 +341,63 @@ Retorne APENAS este JSON (sem markdown, sem texto extra ):
     setLoading(false);
   };
 
+// COLE ESTE BLOCO DE CÓDIGO ABAIXO DA FUNÇÃO 'calculatePricing'
+
+  // ============= DIAGNÓSTICO RÁPIDO =============
+  const generateDiagnostic = async () => {
+    setLoading(true);
+    setResult(null);
+    try {
+      const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${GROQ_API_KEY}` },
+        body: JSON.stringify({
+          model: 'llama-3.3-70b-versatile',
+          messages: [{ role: 'system', content: 'Você é um consultor de negócios de elite. Retorne APENAS JSON válido.' }, {
+            role: 'user', content: `Faça um diagnóstico profundo do negócio.
+NEGÓCIO: ${diagnosticForm.businessName} | ESTÁGIO: ${diagnosticForm.stage} | RECEITA MENSAL: ${diagnosticForm.monthlyRevenue} | TIME: ${diagnosticForm.teamSize} | DESAFIO: ${diagnosticForm.mainChallenge}
+Retorne APENAS este JSON: {"overallScore": 75, "frase_impacto": "Frase curta sobre o momento do negócio.", "strengths": ["Força 1", "Força 2"], "weaknesses": ["Fraqueza 1", "Fraqueza 2"], "priorities": ["Prioridade 1", "Prioridade 2"]}`
+          }],
+          temperature: 0.7, max_tokens: 1500, response_format: { type: "json_object" }
+        } )
+      });
+      const data = await response.json();
+      if (!data.choices?.[0]) throw new Error('Resposta inválida');
+      setResult(JSON.parse(data.choices[0].message.content));
+    } catch (error) {
+      setResult({ error: true, message: 'Erro ao processar. Tente novamente.' });
+    }
+    setLoading(false);
+  };
+
+  // ============= PITCH DE ELEVADOR =============
+  const generateElevatorPitch = async () => {
+    setLoading(true);
+    setResult(null);
+    try {
+      const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${GROQ_API_KEY}` },
+        body: JSON.stringify({
+          model: 'llama-3.3-70b-versatile',
+          messages: [{ role: 'system', content: 'Você é um especialista em comunicação e pitch de negócios. Retorne APENAS JSON válido.' }, {
+            role: 'user', content: `Crie pitches de elevador impactantes.
+NEGÓCIO: ${pitchForm.businessName} | PROBLEMA: ${pitchForm.problemStatement} | SOLUÇÃO: ${pitchForm.solution} | DIFERENCIAL: ${pitchForm.differentiator}
+Retorne APENAS este JSON: {"pitch30": "Pitch de 30 segundos.", "pitch60": "Pitch de 60 segundos.", "pitch120": "Pitch de 2 minutos.", "tips": ["Dica 1", "Dica 2"]}`
+          }],
+          temperature: 0.7, max_tokens: 1500, response_format: { type: "json_object" }
+        } )
+      });
+      const data = await response.json();
+      if (!data.choices?.[0]) throw new Error('Resposta inválida');
+      setResult(JSON.parse(data.choices[0].message.content));
+    } catch (error) {
+      setResult({ error: true, message: 'Erro ao processar. Tente novamente.' });
+    }
+    setLoading(false);
+  };
+
+  
   const exportToPDF = () => {
     const content = document.getElementById('business-plan-content') || 
                     document.getElementById('idea-validation-content') ||
@@ -1093,7 +1150,57 @@ Retorne APENAS este JSON (sem markdown, sem texto extra ):
       )}
     </div>
   );
+// COLE ESTE BLOCO DE CÓDIGO ABAIXO DA FUNÇÃO 'renderMarketing'
 
+  const renderDiagnostic = () => (
+    <div className="max-w-3xl mx-auto space-y-6">
+      <div className="flex items-center gap-3 mb-6"><Zap className="w-8 h-8 text-purple-500" /><h2 className="text-3xl font-bold text-white">Diagnóstico Rápido</h2></div>
+      <div className="bg-gray-900 border border-purple-500/30 rounded-lg p-6 space-y-4">
+        <input type="text" value={diagnosticForm.businessName} onChange={(e) => setDiagnosticForm({ ...diagnosticForm, businessName: e.target.value })} className="w-full bg-black border border-gray-700 rounded p-3" placeholder="Nome do seu negócio" />
+        <select value={diagnosticForm.stage} onChange={(e) => setDiagnosticForm({ ...diagnosticForm, stage: e.target.value })} className="w-full bg-black border border-gray-700 rounded p-3"><option value="">Estágio do negócio...</option><option>Ideia</option><option>MVP</option><option>Tração</option><option>Crescimento</option></select>
+        <input type="text" value={diagnosticForm.monthlyRevenue} onChange={(e) => setDiagnosticForm({ ...diagnosticForm, monthlyRevenue: e.target.value })} className="w-full bg-black border border-gray-700 rounded p-3" placeholder="Faturamento mensal (Ex: R$ 10.000)" />
+        <input type="number" value={diagnosticForm.teamSize} onChange={(e) => setDiagnosticForm({ ...diagnosticForm, teamSize: e.target.value })} className="w-full bg-black border border-gray-700 rounded p-3" placeholder="Tamanho da equipe" />
+        <textarea value={diagnosticForm.mainChallenge} onChange={(e) => setDiagnosticForm({ ...diagnosticForm, mainChallenge: e.target.value })} className="w-full bg-black border border-gray-700 rounded p-3" rows="2" placeholder="Seu principal desafio atual..." />
+        <button onClick={generateDiagnostic} disabled={loading || !diagnosticForm.businessName} className="w-full bg-purple-600 hover:bg-purple-700 disabled:bg-gray-700 font-bold py-3 rounded">{loading ? 'Analisando...' : 'Gerar Diagnóstico'}</button>
+      </div>
+      {result && !result.error && activeTab === 'diagnostic' && (
+        <div id="result-content" className="bg-gray-900 border border-purple-400/30 rounded-lg p-6 space-y-4">
+          <div className="flex justify-between items-center">
+            <h3 className="text-2xl font-bold">Diagnóstico</h3>
+            <div className="text-right"><div className="text-3xl font-bold text-purple-400">{result.overallScore}/100</div></div>
+          </div>
+          {result.frase_impacto && <p className="italic text-purple-100 p-3 bg-purple-900/30 rounded">"{result.frase_impacto}"</p>}
+          <div><h4 className="font-semibold text-green-400">Forças</h4><ul className="list-disc pl-5">{result.strengths?.map((s, i) => <li key={i}>{s}</li>)}</ul></div>
+          <div><h4 className="font-semibold text-yellow-400">Fraquezas</h4><ul className="list-disc pl-5">{result.weaknesses?.map((w, i) => <li key={i}>{w}</li>)}</ul></div>
+          <div><h4 className="font-semibold text-red-400">Prioridades</h4><ol className="list-decimal pl-5">{result.priorities?.map((p, i) => <li key={i}>{p}</li>)}</ol></div>
+        </div>
+      )}
+      {result?.error && <div className="bg-red-900/20 p-4 rounded">{result.message}</div>}
+    </div>
+  );
+
+  const renderPitch = () => (
+    <div className="max-w-3xl mx-auto space-y-6">
+      <div className="flex items-center gap-3 mb-6"><Mic className="w-8 h-8 text-purple-500" /><h2 className="text-3xl font-bold text-white">Pitch de Elevador</h2></div>
+      <div className="bg-gray-900 border border-purple-500/30 rounded-lg p-6 space-y-4">
+        <input type="text" value={pitchForm.businessName} onChange={(e) => setPitchForm({ ...pitchForm, businessName: e.target.value })} className="w-full bg-black border border-gray-700 rounded p-3" placeholder="Nome do seu negócio" />
+        <textarea value={pitchForm.problemStatement} onChange={(e) => setPitchForm({ ...pitchForm, problemStatement: e.target.value })} className="w-full bg-black border border-gray-700 rounded p-3" rows="2" placeholder="Problema que você resolve..." />
+        <textarea value={pitchForm.solution} onChange={(e) => setPitchForm({ ...pitchForm, solution: e.target.value })} className="w-full bg-black border border-gray-700 rounded p-3" rows="2" placeholder="Sua solução..." />
+        <textarea value={pitchForm.differentiator} onChange={(e) => setPitchForm({ ...pitchForm, differentiator: e.target.value })} className="w-full bg-black border border-gray-700 rounded p-3" rows="2" placeholder="Seu diferencial..." />
+        <button onClick={generateElevatorPitch} disabled={loading || !pitchForm.businessName} className="w-full bg-purple-600 hover:bg-purple-700 disabled:bg-gray-700 font-bold py-3 rounded">{loading ? 'Gerando Pitches...' : 'Gerar Pitch de Elevador'}</button>
+      </div>
+      {result && !result.error && activeTab === 'pitch' && (
+        <div id="result-content" className="bg-gray-900 border border-purple-500/30 rounded-lg p-6 space-y-4">
+          {result.pitch30 && <div><h4 className="font-semibold text-blue-400">Pitch 30 Segundos</h4><p className="italic p-2 bg-gray-800 rounded">"{result.pitch30}"</p></div>}
+          {result.pitch60 && <div><h4 className="font-semibold text-green-400">Pitch 60 Segundos</h4><p className="italic p-2 bg-gray-800 rounded">"{result.pitch60}"</p></div>}
+          {result.pitch120 && <div><h4 className="font-semibold text-purple-400">Pitch 2 Minutos</h4><p className="italic p-2 bg-gray-800 rounded">"{result.pitch120}"</p></div>}
+          {result.tips && <div><h4 className="font-semibold text-yellow-400">Dicas</h4><ul className="list-disc pl-5">{result.tips.map((t, i) => <li key={i}>{t}</li>)}</ul></div>}
+        </div>
+      )}
+      {result?.error && <div className="bg-red-900/20 p-4 rounded">{result.message}</div>}
+    </div>
+  );
+  
   return (
     <div className="min-h-screen bg-black text-white">
       <nav className="bg-gray-900 border-b border-purple-500/30">
@@ -1131,15 +1238,17 @@ Retorne APENAS este JSON (sem markdown, sem texto extra ):
         </div>
       </nav>
 
+     // SUBSTITUA PELO TRECHO ABAIXO (com as 2 linhas novas)
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         {activeTab === 'home' && renderHome()}
-        {/* NOVO: Renderização da Calculadora */}
         {activeTab === 'pricing' && renderPricing()}
         {activeTab === 'validator' && renderValidator()}
         {activeTab === 'planner' && renderPlanner()}
         {activeTab === 'marketing' && renderMarketing()}
+        {activeTab === 'diagnostic' && renderDiagnostic()} {/* LINHA NOVA */}
+        {activeTab === 'pitch' && renderPitch()}           {/* LINHA NOVA */}
       </main>
-
+      
       <footer className="bg-gray-900 border-t border-purple-500/30 mt-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 text-center text-gray-400">
           <p>MentorIA - Seu mentor de negócios com inteligência artificial</p>
