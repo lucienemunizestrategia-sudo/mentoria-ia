@@ -415,47 +415,26 @@ Retorne APENAS este JSON: {"pitch30": "Pitch de 30 segundos.", "pitch60": "Pitch
     setTimeout(() => printWindow.print(), 250);
   };
 
+ // ENCONTRE A FUNÇÃO 'renderHome' E SUBSTITUA PELO CÓDIGO ABAIXO
+
   const renderHome = () => (
     <div className="space-y-8">
       <div className="text-center space-y-4">
-        <div className="flex justify-center">
-          <Sparkles className="w-16 h-16 text-purple-500" />
-        </div>
+        <div className="flex justify-center"><Sparkles className="w-16 h-16 text-purple-500" /></div>
         <h1 className="text-4xl font-bold text-white">MentorIA</h1>
         <p className="text-xl text-gray-300">Seu mentor de negócios com inteligência artificial</p>
-        <p className="text-gray-400 max-w-2xl mx-auto">
-          Valide ideias, crie planos de negócio e desenvolva estratégias de marketing com ajuda de IA avançada.
-        </p>
       </div>
-
-      <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mt-12">
-        {/* NOVO: Card da Calculadora */}
-        <div onClick={() => setActiveTab('pricing')} className="bg-gray-900 border border-green-500/30 rounded-lg p-6 hover:border-green-500 transition-all cursor-pointer group">
-          <DollarSign className="w-12 h-12 text-green-500 mb-4 group-hover:text-green-400 transition-colors" />
-          <h3 className="text-xl font-bold text-white mb-2">Calculadora de Preços</h3>
-          <p className="text-gray-400">Descubra o preço ideal para seu produto ou serviço</p>
-        </div>
-        
-        <div onClick={() => setActiveTab('validator')} className="bg-gray-900 border border-purple-500/30 rounded-lg p-6 hover:border-purple-500 transition-all cursor-pointer group">
-          <Lightbulb className="w-12 h-12 text-purple-500 mb-4 group-hover:text-green-400 transition-colors" />
-          <h3 className="text-xl font-bold text-white mb-2">Validador de Ideias</h3>
-          <p className="text-gray-400">Analise a viabilidade da sua ideia de negócio em minutos</p>
-        </div>
-
-        <div onClick={() => setActiveTab('planner')} className="bg-gray-900 border border-purple-500/30 rounded-lg p-6 hover:border-purple-500 transition-all cursor-pointer group">
-          <FileText className="w-12 h-12 text-purple-500 mb-4 group-hover:text-green-400 transition-colors" />
-          <h3 className="text-xl font-bold text-white mb-2">Plano de Negócios</h3>
-          <p className="text-gray-400">Gere um plano de negócios estruturado e acionável</p>
-        </div>
-
-        <div onClick={() => setActiveTab('marketing')} className="bg-gray-900 border border-purple-500/30 rounded-lg p-6 hover:border-purple-500 transition-all cursor-pointer group">
-          <TrendingUp className="w-12 h-12 text-purple-500 mb-4 group-hover:text-green-400 transition-colors" />
-          <h3 className="text-xl font-bold text-white mb-2">Estratégia de Marketing</h3>
-          <p className="text-gray-400">Crie um plano de marketing completo para seus primeiros 30 dias</p>
-        </div>
+      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mt-12">
+        <div onClick={() => setActiveTab('validator')} className="bg-gray-900 border border-purple-500/30 rounded-lg p-6 hover:border-purple-500 cursor-pointer"><Lightbulb className="w-12 h-12 text-purple-500 mb-4" /><h3 className="text-xl font-bold text-white mb-2">Validador de Ideias</h3><p className="text-gray-400">Analise a viabilidade da sua ideia.</p></div>
+        <div onClick={() => setActiveTab('diagnostic')} className="bg-gray-900 border border-purple-500/30 rounded-lg p-6 hover:border-purple-500 cursor-pointer"><Zap className="w-12 h-12 text-purple-500 mb-4" /><h3 className="text-xl font-bold text-white mb-2">Diagnóstico Rápido</h3><p className="text-gray-400">Avalie a saúde do seu negócio.</p></div>
+        <div onClick={() => setActiveTab('planner')} className="bg-gray-900 border border-purple-500/30 rounded-lg p-6 hover:border-purple-500 cursor-pointer"><FileText className="w-12 h-12 text-purple-500 mb-4" /><h3 className="text-xl font-bold text-white mb-2">Plano de Negócios</h3><p className="text-gray-400">Gere um plano estruturado.</p></div>
+        <div onClick={() => setActiveTab('marketing')} className="bg-gray-900 border border-purple-500/30 rounded-lg p-6 hover:border-purple-500 cursor-pointer"><TrendingUp className="w-12 h-12 text-purple-500 mb-4" /><h3 className="text-xl font-bold text-white mb-2">Estratégia de Marketing</h3><p className="text-gray-400">Crie um plano para 30 dias.</p></div>
+        <div onClick={() => setActiveTab('pitch')} className="bg-gray-900 border border-purple-500/30 rounded-lg p-6 hover:border-purple-500 cursor-pointer"><Mic className="w-12 h-12 text-purple-500 mb-4" /><h3 className="text-xl font-bold text-white mb-2">Pitch de Elevador</h3><p className="text-gray-400">Gere discursos de venda rápidos.</p></div>
+        <div onClick={() => setActiveTab('pricing')} className="bg-gray-900 border border-green-500/30 rounded-lg p-6 hover:border-green-500 cursor-pointer"><DollarSign className="w-12 h-12 text-green-500 mb-4" /><h3 className="text-xl font-bold text-white mb-2">Calculadora de Preços</h3><p className="text-gray-400">Descubra o preço ideal.</p></div>
       </div>
     </div>
   );
+
 
   // NOVO: Componente de renderização da Calculadora de Precificação
   const renderPricing = () => (
