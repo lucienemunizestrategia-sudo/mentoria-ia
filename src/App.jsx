@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { Lightbulb, FileText, TrendingUp, Menu, X, Sparkles, CheckCircle, AlertCircle, Download, Zap, DollarSign, Mic } from 'lucide-react';
 
+const GROQ_API_KEY = process.env.GROQ_API_KEY;
+
+
 const MentorIA = () => {
   const [activeTab, setActiveTab] = useState('home');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
