@@ -598,7 +598,7 @@ bold text-white">R$ {result.preco_premium}</div>
         <input type="text" value={pitchForm.businessName} onChange={(e) => setPitchForm({ ...pitchForm, businessName: e.target.value })} className="w-full bg-black border border-gray-700 rounded p-3" placeholder="Nome do seu negócio" />
         <textarea value={pitchForm.problemStatement} onChange={(e) => setPitchForm({ ...pitchForm, problemStatement: e.target.value })} className="w-full bg-black border border-gray-700 rounded p-3" rows="2" placeholder="Problema que você resolve..." />
         <textarea value={pitchForm.solution} onChange={(e) => setPitchForm({ ...pitchForm, solution: e.target.value })} className="w-full bg-black border border-gray-700 rounded p-3" rows="2" placeholder="Sua solução..." />
-        <textarea value={pitchForm.differentiator} onChange={(e) => setPitchForm({ ...pitchForm, differentiator: e.g.target.value })} className="w-full bg-black border border-gray-700 rounded p-3" rows="2" placeholder="Seu diferencial..." />
+<textarea value={pitchForm.differentiator} onChange={(e) => setPitchForm({ ...pitchForm, differentiator: e.target.value })} className="w-full bg-black border border-gray-700 rounded p-3" rows="2" placeholder="Seu diferencial..." />
         <button onClick={generateElevatorPitch} disabled={loading || !pitchForm.businessName} className="w-full bg-purple-600 hover:bg-purple-700 disabled:bg-gray-700 font-bold py-3 rounded">{loading ? 'Gerando Pitches...' : 'Gerar Pitch de Elevador'}</button>
       </div>
       {result && !result.error && activeTab === 'pitch' && (
