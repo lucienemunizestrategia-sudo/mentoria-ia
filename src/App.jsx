@@ -67,7 +67,7 @@ const MentorIA = () => {
     setResult(null);
     
     try {
-      const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+    const response = await fetch('http://localhost:3001/api/mentor', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -122,8 +122,8 @@ Retorne APENAS este JSON válido (sem markdown, sem texto adicional):
     setLoading(true);
     setResult(null);
     
-    try {
-      const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+    try {const response = await fetch('http://localhost:3001/api/mentor', {
+      
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -187,7 +187,7 @@ Retorne APENAS este JSON:
     setResult(null);
     
     try {
-      const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+  const response = await fetch('http://localhost:3001/api/mentor', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -249,7 +249,7 @@ Retorne APENAS este JSON:
     setResult(null);
     
     try {
-      const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+ const response = await fetch('http://localhost:3001/api/mentor', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -331,7 +331,7 @@ Retorne APENAS este JSON válido (sem markdown, sem explicações extras):
     setResult(null);
     
     try {
-      const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+const response = await fetch('http://localhost:3001/api/mentor', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -392,7 +392,7 @@ Retorne APENAS este JSON válido (sem markdown, sem texto adicional):
     setResult(null);
     
     try {
-      const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+      const response = await fetch('http://localhost:3001/api/mentor', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
