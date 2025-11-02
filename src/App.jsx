@@ -1221,7 +1221,7 @@ Retorne APENAS este JSON: {"pitch30": "Pitch de 30 segundos.", "pitch60": "Pitch
         </div>
       </nav>
 
-     // SUBSTITUA PELO TRECHO ABAIXO (com as 2 linhas novas)
+      
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         {activeTab === 'home' && renderHome()}
         {activeTab === 'pricing' && renderPricing()}
