@@ -30,6 +30,23 @@ const MentorIA = () => {
     audience: '',
     budget: ''
   });
+  // COLE ESTE BLOCO DE CÓDIGO ABAIXO DA LINHA DO 'pricingForm'
+
+  const [diagnosticForm, setDiagnosticForm] = useState({
+    businessName: '',
+    stage: '',
+    monthlyRevenue: '',
+    teamSize: '',
+    mainChallenge: ''
+  });
+
+  const [pitchForm, setPitchForm] = useState({
+    businessName: '',
+    problemStatement: '',
+    solution: '',
+    differentiator: ''
+  });
+
 
   // NOVO: Estado para o formulário da calculadora de precificação
   const [pricingForm, setPricingForm] = useState({ 
