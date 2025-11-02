@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { Lightbulb, FileText, TrendingUp, Menu, X, Sparkles, CheckCircle, AlertCircle, Download, Zap, DollarSign, Mic } from 'lucide-react';
 
 // Configuração da API Groq
-  const GROQ_API_KEY = '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';
-  const GROQ_API_URL = 'https://api.groq.com/openai/v1/chat/completions';
+const GROQ_API_KEY = import.meta.env.VITE_GROQ_API_KEY;
+const GROQ_API_URL = 'https://api.groq.com/openai/v1/chat/completions';
 
 const MentorIA = () => {
   const [activeTab, setActiveTab] = useState('home');
