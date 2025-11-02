@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { Lightbulb, FileText, TrendingUp, Menu, X, Sparkles, CheckCircle, AlertCircle, Download, Zap, DollarSign, Mic } from 'lucide-react';
 
+// Configuração da API Groq
+  const GROQ_API_KEY = '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';
+  const GROQ_API_URL = 'https://api.groq.com/openai/v1/chat/completions';
 
 const MentorIA = () => {
   const [activeTab, setActiveTab] = useState('home');
@@ -66,7 +69,7 @@ const MentorIA = () => {
     setResult(null);
     
     try {
-    const response = await fetch('http://localhost:3001/api/mentor', {
+    const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -121,7 +124,7 @@ Retorne APENAS este JSON válido (sem markdown, sem texto adicional):
     setLoading(true);
     setResult(null);
     
-    try {const response = await fetch('http://localhost:3001/api/mentor', {
+    try {const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
       
         method: 'POST',
         headers: {
@@ -186,7 +189,7 @@ Retorne APENAS este JSON:
     setResult(null);
     
     try {
-  const response = await fetch('http://localhost:3001/api/mentor', {
+  const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -248,7 +251,7 @@ Retorne APENAS este JSON:
     setResult(null);
     
     try {
- const response = await fetch('http://localhost:3001/api/mentor', {
+ const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -330,7 +333,7 @@ Retorne APENAS este JSON válido (sem markdown, sem explicações extras):
     setResult(null);
     
     try {
-const response = await fetch('http://localhost:3001/api/mentor', {
+const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -391,7 +394,7 @@ Retorne APENAS este JSON válido (sem markdown, sem texto adicional):
     setResult(null);
     
     try {
-      const response = await fetch('http://localhost:3001/api/mentor', {
+      const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
