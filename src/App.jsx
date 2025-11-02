@@ -1101,22 +1101,16 @@ Retorne APENAS este JSON (sem markdown, sem texto extra ):
             </button>
           </div>
 
-                   {mobileMenuOpen && (
+                    {mobileMenuOpen && (
             <div className="md:hidden py-4 space-y-2">
               <button onClick={() => {setActiveTab('home'); setMobileMenuOpen(false); setResult(null);}} className={`block w-full text-left px-4 py-2 rounded ${activeTab === 'home' ? 'bg-purple-600' : 'hover:bg-gray-800'}`}>Início</button>
-              
-              {/* Botão da Calculadora no menu mobile */}
               <button onClick={() => {setActiveTab('pricing'); setMobileMenuOpen(false); setResult(null);}} className={`block w-full text-left px-4 py-2 rounded ${activeTab === 'pricing' ? 'bg-purple-600' : 'hover:bg-gray-800'}`}>Preços</button>
-              
-              {/* LINHA CORRIGIDA ABAIXO */}
               <button onClick={() => {setActiveTab('validator'); setMobileMenuOpen(false); setResult(null);}} className={`block w-full text-left px-4 py-2 rounded ${activeTab === 'validator' ? 'bg-purple-600' : 'hover:bg-gray-800'}`}>Validador</button>
-              
               <button onClick={() => {setActiveTab('planner'); setMobileMenuOpen(false); setResult(null);}} className={`block w-full text-left px-4 py-2 rounded ${activeTab === 'planner' ? 'bg-purple-600' : 'hover:bg-gray-800'}`}>Plano de Negócios</button>
               <button onClick={() => {setActiveTab('marketing'); setMobileMenuOpen(false); setResult(null);}} className={`block w-full text-left px-4 py-2 rounded ${activeTab === 'marketing' ? 'bg-purple-600' : 'hover:bg-gray-800'}`}>Marketing</button>
             </div>
           )}
 
-          )}
         </div>
       </nav>
 
