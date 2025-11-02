@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Lightbulb, FileText, TrendingUp, Menu, X, Sparkles, CheckCircle, AlertCircle, Download, DollarSign } from 'lucide-react';
+import { Lightbulb, FileText, TrendingUp, Menu, X, Sparkles, CheckCircle, AlertCircle, Download, DollarSign, Zap, Mic } from 'lucide-react';
 
 const GROQ_API_KEY = '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';
 
